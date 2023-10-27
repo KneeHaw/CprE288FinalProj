@@ -1,0 +1,3 @@
+libsql-client
+matplotlib
+numpy
