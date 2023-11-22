@@ -1,16 +1,17 @@
 import datetime
-import libsql_client as sql
+import xata
 
-DB_URL = 'libsql://roomba-rush-db-conneroisu.turso.io'
+load_dotenv.load_dotenv()
+
+
+DB_URL = 'https://connero-s-workspace-ep1498.us-east-1.xata.sh/db/roomba-dash'
 
 # https://docs.turso.tech/libsql/client-access/python-sdk
 
 # Gets the client for the database connection
-def getClient() -> sql.Client:
-    return sql.create_client_sync(
-        url="libsql://roomba-rush-db-conneroisu.turso.io",
-        auth_token='eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJpYXQiOiIyMDIzLTEwLTI0VDIxOjE5OjA3LjY0NTU0MjEzWiIsImlkIjoiZWI3ZGVkN2QtNzJiMi0xMWVlLWFmNjYtYmFmMDU1NzM4YzU3In0.yFSS41a0GPAjAhNQLCQagd0ARpbf71Gb1zwjmSiqayKpm0D7p0mop3I_EgUF9sUFj-uFg39-H0eSapzppDN1BA'
-    )
+def getClient() -> XataClient:
+    return xata.Client(DB_URL)
+    
 
 
 # marker has a date, lat, long
