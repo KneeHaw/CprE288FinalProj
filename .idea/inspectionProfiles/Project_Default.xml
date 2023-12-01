@@ -1,0 +1,60 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="IncorrectHttpHeaderInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="customHeaders">
+        <set>
+          <option value="Subject" />
+          <option value="Reply-To" />
+          <option value="X-JSON-Schema" />
+          <option value="X-JSON-Type" />
+          <option value="X-JSON-Path" />
+          <option value="X-Java-Type" />
+          <option value="X-Region-Id" />
+          <option value="X-GraphQL-Variables" />
+          <option value="X-SSH-Private-Key" />
+          <option value="X-Temperature" />
+          <option value="X-Model" />
+          <option value="X-OPENAI-API-KEY" />
+          <option value="X-Args-0" />
+          <option value="X-Args-1" />
+          <option value="X-Args-2" />
+          <option value="X-Args-3" />
+          <option value="X-Args-4" />
+          <option value="X-Args-5" />
+        </set>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="8">
+            <item index="0" class="java.lang.String" itemvalue="abstract-singleton" />
+            <item index="1" class="java.lang.String" itemvalue="build" />
+            <item index="2" class="java.lang.String" itemvalue="pylint" />
+            <item index="3" class="java.lang.String" itemvalue="twine" />
+            <item index="4" class="java.lang.String" itemvalue="black" />
+            <item index="5" class="java.lang.String" itemvalue="isort" />
+            <item index="6" class="java.lang.String" itemvalue="obsidiantools" />
+            <item index="7" class="java.lang.String" itemvalue="flake8" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N812" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="tkinter.Window" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
