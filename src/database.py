@@ -5,14 +5,21 @@ load_dotenv.load_dotenv()
 
 
 DB_URL = 'https://connero-s-workspace-ep1498.us-east-1.xata.sh/db/roomba-dash'
+from xata.client import XataClient
+import xata
+from dotenv import load_dotenv
 
-# https://docs.turso.tech/libsql/client-access/python-sdk
+DB_URL = "libsql://roomba-rush-db-conneroisu.turso.io"
+
+load_dotenv()
 
 # Gets the client for the database connection
 def getClient() -> XataClient:
     return xata.Client(DB_URL)
     
 
+def getClient() -> XataClient:
+    return XataClient(db_url="REDACTED_DB_URL")
 
 # marker has a date, lat, long
 class Marker:
@@ -27,30 +34,27 @@ class Marker:
 
 # Adds a path marker to the database which shows the path the robot has taken
 def addPathMarker(date, lat, long) -> bool:
-    client = getClient();
-    with client:
-        # Execute a query
-        client.execute("insert into paths values (:date, :lat, :long)", {"date": date, "lat": lat, "long": long})
+    client = getClient()
+    record = {"date": date, "lat": lat, "long": long}
+    return client.records().insert("paths", record, "main")
 
 
 # Gets all the paths from the database
-def getPaths() -> [Marker]:
+def getPaths():
     client = getClient()
-    with client:
-        # create marker array object
-        markers = []
-        # Execute a query
-        result_set = client.execute("SELECT * FROM paths")
-        # Work with query results
-        for row in result_set.rows:
-            markers.append(Marker(row[0], row[1], row[2]))
+    records = client.records()
+    results = records.get("paths", "all")
+    return results
 
-        return markers
 
 # Gets the current date and time in the database format
+
+
 def getDate() -> str:
     # Creates a string like  Wednesday, October 25, 2023 at 12:59 PM and 23.002 seconds
-    return datetime.datetime.now().strftime("%A, %B %d, %Y at %I:%M %p and %S.%f seconds")
+    return datetime.datetime.now().strftime(
+        "%A, %B %d, %Y at %I:%M %p and %S.%f seconds"
+    )
 
 
 # if __name__ == '__main__':

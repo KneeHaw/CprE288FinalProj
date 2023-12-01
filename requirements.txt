@@ -1,4 +1,3 @@
-libsql-client
 matplotlib
 numpy
 xata
