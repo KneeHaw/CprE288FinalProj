@@ -17,8 +17,9 @@ def getClient() -> XataClient:
         raise ValueError("API_KEY is not defined")
     return XataClient(db_url=DB_URL, api_key=API_KEY)
 
-
 # marker has a date, lat, long
+
+
 class Marker:
     def __init__(self, date, lat, long):
         self.date = date
@@ -72,6 +73,28 @@ def getOrders():
         ]
     })
     print(data)
+
+
+def getLatestOrder():
+    """Returns the latest order in the database"""
+    # Get the xata client
+    client = getClient()
+
+    # Quert Database for orders
+    data = client.data().query("orders", {
+        "columns": [
+            "id",
+            "xata.createdAt"
+            "goods",
+            "total_price",
+            "house",
+            "house.letter",
+            "client"
+        ],
+        "limit": 1
+    })
+    # Return the data
+    return data
 
 
 def createObstacle(latitude: float, longitude: float):
