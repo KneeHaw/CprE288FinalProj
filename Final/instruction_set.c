@@ -16,6 +16,7 @@
  * 5. Create BUMP interrupt?
  *      Sometimes scanning happens at a bad time and bumps aren't detected mid movement
  *      Or implement another fix!
+ * 6.
  */
 
 #include "instruction_set.h"
