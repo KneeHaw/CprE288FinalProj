@@ -148,7 +148,7 @@ void move_distance(oi_t *self, double dist, int16_t speed, int bump) { // (senso
             lcd_init();
             lcd_printf("AT CLIFF");
             if(bocl.front_left || bocl.front_right){
-                move_distance(self, dist/2*-1, speed, bump);
+                move_distance(self, -140, speed, bump);
                 return;
             }
             else{
@@ -164,7 +164,7 @@ void move_distance(oi_t *self, double dist, int16_t speed, int bump) { // (senso
             lcd_init();
             lcd_printf("AT BOUNDARY");
             if(bocl.front_left || bocl.front_right){
-                move_distance(self, dist/2*-1, speed, bump);
+                move_distance(self, -140, speed, bump);
                 return;
             }
             else{
