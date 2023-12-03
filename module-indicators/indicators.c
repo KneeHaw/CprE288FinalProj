@@ -1,7 +1,3 @@
-//
-// Created by Conner Ohnesorge on 11/8/2023.
-//
-
 #include "indicators.h"
 #include "tm4c123gh6pm.h"
 #include "indicatorUtils.h"
@@ -19,16 +15,10 @@ void initIndicators() {
     if (!indicatorsInitialized) {
         // Enable Clock for PORT F
         SYSCTL_RCGCGPIO_R |= 0x20;
-        // Enable Clock for PORT B
-        SYSCTL_RCGCGPIO_R |= 0x02;
         // Enable PORT F Pin 2 and 3 as a digital pins
-        GPIO_PORTF_DEN_R = 0x0C;
+        GPIO_PORTF_DEN_R = 0xE0;
         // Configure PORT F's Pins:  2 and 3; as digital output pins
-        GPIO_PORTF_DIR_R = 0x0C;
-        // Enable PORT B Pin 3
-        GPIO_PORTB_DEN_R |= 0x08;
-        // Configure PORT B's Pin 3 as a digital output pin
-        GPIO_PORTB_DIR_R |= 0x08;
+        GPIO_PORTF_DIR_R = 0xE0;
         // Initialize ISR for PORT F Pin 1
         GPIO_PORTF_IS_R &= ~0x02;
         // Turn on the Clock to TIMER5
