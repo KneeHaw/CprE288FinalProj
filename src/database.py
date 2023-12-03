@@ -77,6 +77,9 @@ def getOrders():
 
 
 def createObstacle(latitude: float, longitude: float):
+    """Creates an obstacle with the given latitude and longitude
+    in the database. Returns the data of the obstacle. Is
+    Shown on the map as a obstacle"""
     client = getClient()
 
     data = client.records().insert("obstacles", {
@@ -87,6 +90,8 @@ def createObstacle(latitude: float, longitude: float):
 
 
 def getHouses():
+    """Returns a list of houses with the following columns:
+    id, latitude, longitude, photo, name, character"""
     client = getClient()
 
     data = client.data().query("houses", {
@@ -99,4 +104,18 @@ def getHouses():
             "character"
         ]
     })
+    return data
+
+
+def updateOrderStatus(order_id: int, status: str):
+    """A Status can be: "pending", "in_progress", "completed" or "cancelled"""
+    # Get the xata client
+    client = getClient()
+
+    # Update the order status
+    data = client.records().update("order", order_id, {
+        "status": status
+    })
+
+    # Return the data
     return data
