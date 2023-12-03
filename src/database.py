@@ -54,14 +54,12 @@ def getDestination():
 # Gets the current date and time in the database format
 
 
-def getDate() -> str:
-    # Creates a string like  Wednesday, October 25, 2023 at 12:59 PM and 23.002
-    return datetime.datetime.now().strftime(
-        "%A, %B %d, %Y at %I:%M %p and %S.%f seconds"
-    )
-
-
 def getOrders():
+    """Returns a list of orders with the following columns: id, goods, 
+    total_price, house, client. The house and client columns are
+    foreign keys to the houses and clients table. The orders are the 
+    orders that are in the database to be delivered."""
+    # Get the xata client
     client = getClient()
 
     data = client.data().query("orders", {
@@ -80,20 +78,28 @@ def createObstacle(latitude: float, longitude: float):
     """Creates an obstacle with the given latitude and longitude
     in the database. Returns the data of the obstacle. Is
     Shown on the map as a obstacle"""
+
+    # Get the xata client
     client = getClient()
 
+    # Insert the obstacle
     data = client.records().insert("obstacles", {
         "latitude": latitude,
         "longitude": longitude
     })
+
+    # Return the data
     return data
 
 
 def getHouses():
     """Returns a list of houses with the following columns:
     id, latitude, longitude, photo, name, character"""
+
+    # Get the xata client
     client = getClient()
 
+    # Quert Database for houses
     data = client.data().query("houses", {
         "columns": [
             "id",
@@ -107,7 +113,7 @@ def getHouses():
     return data
 
 
-def updateOrderStatus(order_id: int, status: str):
+def updateOrderStatus(order_id: str, status: str):
     """A Status can be: "pending", "in_progress", "completed" or "cancelled"""
     # Get the xata client
     client = getClient()
@@ -119,3 +125,70 @@ def updateOrderStatus(order_id: int, status: str):
 
     # Return the data
     return data
+
+
+def updateObstacle(obstacle_id: str, latitude: float, longitude: float):
+    """Updates the obstacle with the given id with the given latitude and longitude"""
+    # Get the xata client
+    client = getClient()
+
+    # Update the obstacle
+    data = client.records().update("obstacles", obstacle_id, {
+        "latitude": latitude,
+        "longitude": longitude
+    })
+
+    # Return the data
+    return data
+
+
+def deleteObstacle(obstacle_id: str):
+    """Deletes the obstacle with the given id"""
+    # Get the xata client
+    client = getClient()
+
+    # Delete the obstacle
+    data = client.records().delete("obstacles", obstacle_id)
+
+    # Return the data
+    return data
+
+
+def getObstacles():
+    """Returns a list of obstacles with the following columns:
+    id, latitude, longitude"""
+
+    # Get the xata client
+    client = getClient()
+
+    # Quert Database for obstacles
+    data = client.data().query("obstacles", {
+        "columns": [
+            "id",
+            "latitude",
+            "longitude"
+        ]
+    })
+    return data
+
+
+def getObstacle(obstacle_id: str):
+    """Returns the obstacle with the given id"""
+    # Get the xata client
+    client = getClient()
+
+    # Quert Database for obstacle
+    data = client.data().query("obstacles", {
+        "columns": [
+            "id",
+            "latitude",
+            "longitude"
+        ],
+        "filter": {
+            "id": obstacle_id
+        }
+    })
+    return data
+
+
+def getHouse(house_id: string):
