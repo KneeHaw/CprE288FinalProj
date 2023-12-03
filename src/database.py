@@ -1,17 +1,25 @@
 import datetime
+import xata
+
+load_dotenv.load_dotenv()
+
+
+DB_URL = 'https://connero-s-workspace-ep1498.us-east-1.xata.sh/db/roomba-dash'
 from xata.client import XataClient
 import xata
 from dotenv import load_dotenv
-
 
 DB_URL = "libsql://roomba-rush-db-conneroisu.turso.io"
 
 load_dotenv()
 
+# Gets the client for the database connection
+def getClient() -> XataClient:
+    return xata.Client(DB_URL)
+    
 
 def getClient() -> XataClient:
     return XataClient(db_url="REDACTED_DB_URL")
-
 
 # marker has a date, lat, long
 class Marker:
