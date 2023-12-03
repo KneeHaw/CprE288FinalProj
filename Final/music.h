@@ -1,32 +1,23 @@
 /*
- * movement.h
+ * music.h
  *
- *  Created on: Sep 3, 2023
- *      Author: joo
+ *  Created on: Dec 1, 2023
+ *      Author: kneehaw
  */
+
 #ifndef MUSIC_H_
 #define MUSIC_H_
 
-
+#include "Timer.h"
+#include <inc/tm4c123gh6pm.h>
+#include "lcd.h"
 #include "open_interface.h"
 
-
-/**
- * Before calling this method, be sure to initialize the open interface by calling:
- *
- *   oi_t* sensor = oi_alloc();
- *   oi_init(sensor);
- *
- * Loads some songs over the open interface
- */
 void load_song();
 
+void play_songs(oi_t *self);
 
-/*
- * brief Play song
- */
-void play_song();
+void do_music();
 
 
 #endif /* MUSIC_H_ */
-
