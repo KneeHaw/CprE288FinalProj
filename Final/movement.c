@@ -12,6 +12,7 @@
 #include "imu.h"
 #include "bno055.h"
 #include "math.h"
+#include "boundary.h"
 
 #define turn_speed 30
 
@@ -109,6 +110,7 @@ void correct_right(oi_t *self) {
 void move_distance(oi_t *self, double dist, int16_t speed, int bump) { // (sensor struct, mm, mm/s)
     struct bno055_euler_float_t starting_angles;
     struct bno055_euler_float_t current_angles;
+    boundary_or_cliff_location* bocl = boundary_alloc();
     bno055_convert_float_euler_hpr_deg(&starting_angles);
     float right_wheel_correction_factor = 1;
 
@@ -139,6 +141,38 @@ void move_distance(oi_t *self, double dist, int16_t speed, int bump) { // (senso
             oi_update(self);
         }
         //END BUMP DETECTION
+
+        //BEGIN CLIFF DETECTION
+        if( isCliff(self, bocl) ) {
+            oi_setWheels(0, 0);
+            lcd_init();
+            lcd_printf("AT CLIFF");
+            if(bocl.front_left || bocl.front_right){
+                move_distance(self, dist/2*-1, speed, bump);
+                return;
+            }
+            else{
+                // handle side boundary
+            }
+            oi_update(self);
+        }
+        //END CLIFF DETECTION
+
+         //BEGIN BOUNDARY DETECTION
+        if( isBoundary(self, bocl) ){
+            oi_setWheels(0, 0);
+            lcd_init();
+            lcd_printf("AT BOUNDARY");
+            if(bocl.front_left || bocl.front_right){
+                move_distance(self, dist/2*-1, speed, bump);
+                return;
+            }
+            else{
+                // handle side boundary
+            }
+            oi_update(self);
+        }
+        //END BOUNDARY DETECTION
 
         bno055_convert_float_euler_hpr_deg(&current_angles);
         right_wheel_correction_factor = get_correction_factor(starting_angles.h, current_angles.h);
