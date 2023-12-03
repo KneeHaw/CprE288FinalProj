@@ -23,10 +23,10 @@ bool isCliff(oi_t* sensor, boundary_or_cliff_location* loc)
 bool isBoundary(oi_t* sensor, boundary_or_cliff_location* loc)
 {
     oi_update(sensor);
-    loc->front_left = sensor->cliffFrontLeftSignal;
-    loc->front_right = sensor->cliffFrontRightSignal;
-    loc->left = sensor->cliffLeftSignal;
-    loc->right = sensor->cliffRightSignal;
+    loc->front_left = (sensor->cliffLeftSignal > 2500) ? 1 : 0;
+    loc->front_right = (sensor->cliffRightSignal > 2500) ? 1 : 0;
+    loc->left = (sensor->cliffFrontLeftSignal > 2500) ? 1 : 0;
+    loc->right = (sensor->cliffFrontRightSignal > 2500) ? 1 : 0;
 
     return ( (sensor->cliffLeftSignal > 2500) || (sensor->cliffRightSignal > 2500) || (sensor->cliffFrontLeftSignal > 2500) || (sensor->cliffFrontRightSignal > 2500) );
 }
