@@ -95,7 +95,8 @@ def getHouses():
             "latitude",
             "longitude",
             "photo",
-            "name"
+            "name",
+            "character"
         ]
     })
     return data
