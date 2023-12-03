@@ -87,7 +87,7 @@ void init_adc() {
     ADC0_SSCTL0_R &= 0x00000000; //Clear SS0 setup
     ADC0_SSCTL0_R |= 0x00000006; //Takes one sample and sends an interrupt afterward
 
-    ADC0_SAC_R |= 0b011; // Set 8x over-sampling in ADC
+    ADC0_SAC_R |= 0b110; // Set 8x over-sampling in ADC
 
     ADC0_ACTSS_R |= 0x00000001; // Enable SS0 logic in ADCACTSS
 }

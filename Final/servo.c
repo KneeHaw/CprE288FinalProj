@@ -33,8 +33,8 @@
 
 #include "servo.h"
 float deg_val = 177.78;  //positive = clockwise, negative = counter clockwise
-int zero_clock = 58585;
-int pi_clock = 29935;
+int zero_clock = 58085;
+int pi_clock = 29185;
 
 void init_pb5_servo() {
     SYSCTL_RCGCGPIO_R |= 0b00000010; // Enable clock to GPIO B

@@ -84,6 +84,7 @@ float total_time;
 void timer_interrupt_handler() {
     if (TIMER3_RIS_R & 0b10000000000) {
         holder = TIMER3_TBR_R;
+
         TIMER3_ICR_R |= 0b10000000000; //Clear timer interrupt for edge
         flag = 1;
     }
@@ -112,6 +113,7 @@ float get_ping() {
     while (1) {
         if (flag && (start_time == 0) && (counter == 0)) {
             start_time = holder;
+
             counter = 1;
             flag = 0;
         }
@@ -121,6 +123,7 @@ float get_ping() {
             counter = 2;
         }
         else if (counter == 2) {
+            lcd_printf("%x\n%x", start_time, end_time);
             if ((start_time - end_time) > 0) {
                 total_time = ((float)(start_time - end_time)) / 16000000;
             }

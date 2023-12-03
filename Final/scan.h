@@ -47,11 +47,12 @@ float IR_interpret(float IR_raw);
 
 void ir_calibrate();
 
-objs_t perform_detailed_scan(oi_t* sensor_data, int deg_inc, int tot_deg);
-
 void cyScan(int degrees, cyData* data, char ping, char ir, int wait_time);
 
-void ir_calibrate();
+objs_t* perform_scan_staticObjs(oi_t* self, int deg_inc, int end_deg, int start_deg);
+
+
+objs_t final_ir_only_scan(objs_t* prev_objs, bool reset_num_scans, bool check_moving, int end_deg, int start_deg, int deg_inc);
 
 
 #endif /* SCAN_H_ */

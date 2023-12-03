@@ -78,3 +78,8 @@ void uart_init_wrapper() {
     uart_init();
     uart_interrupt_init();
 }
+
+char uart_get_char() {
+    while ((new_data_flag & 0xFF) == 0) {}
+    return received_data;
+}

@@ -27,6 +27,7 @@
 #include "driverlib/i2c.h"
 #include "imu.h"
 #include "init_imu.h"
+#include "uart.h"
 
 #define BNO055_ADDRESS_TX ((0x29 << 1) | 0x00)
 #define BNO055_ADDRESS_RX ((0x29 << 1) | 0x01)
@@ -114,30 +115,42 @@ void init_I2C() {
 //        }
 //    }
 //}
-
+void load_stored_calibration();
 void init_IMU_wrapper() {
     ConfigureI2C();
     init_imu();
+    load_stored_calibration();
     set_imu_mode(BNO055_OPERATION_MODE_IMUPLUS);
-    struct bno055_accel_offset_t accel_offsets;
-    accel_offsets.r = 0x3E6;
-    accel_offsets.x = 0xFFFFFFE6;
-    accel_offsets.y = 0x9;
-    accel_offsets.z = 0x5;
 
-    struct bno055_gyro_offset_t gyro_offsets;
-    gyro_offsets.x = 0xFFFFFFFF;
-    gyro_offsets.z = 0xFFFFFFFD;
-    gyro_offsets.y = 0xFFFFFFFC;
+
 
 }
 
 void load_stored_calibration() {
-    set_imu_mode(BNO055_OPERATION_MODE_CONFIG);
+//    set_imu_mode(BNO055_OPERATION_MODE_CONFIG);
+    struct bno055_accel_offset_t accel_offsets;
+    accel_offsets.r = 0x3E8;
+    accel_offsets.x = 0;
+    accel_offsets.y = 0;
+    accel_offsets.z = 0;
+    bno055_write_accel_offset(&accel_offsets);
 
+    struct bno055_gyro_offset_t gyro_offsets;
+    gyro_offsets.x = 0;
+    gyro_offsets.z = 0;
+    gyro_offsets.y = 0;
+    bno055_write_gyro_offset(&gyro_offsets);
+
+    struct bno055_mag_offset_t mag_offsets;
+    mag_offsets.x = 0;
+    mag_offsets.z = 0;
+    mag_offsets.y = 0;
+    mag_offsets.r = 0x1E0;
+    bno055_write_mag_offset(&mag_offsets);
 }
 void calibrate_gyro() {
     int calibrated = 0;
+    bool flag = true;
     volatile Calibration cal;
 
     // Loop until the device is fully calibrated
@@ -147,7 +160,7 @@ void calibrate_gyro() {
 
       lcd_printf("Gyro: %d, Acc: %d, Mag: %d, Sys: %d\nError: %i", cal.gyro, cal.accl, cal.magn, cal.syst, get_error());
 
-      if((cal.gyro == 3) && (cal.accl == 3))
+      if((cal.gyro == 3) && (cal.accl == 3) && cal.magn == 3 && cal.syst == 3)
       {
         calibrated = 1;
       }
@@ -159,9 +172,16 @@ void calibrate_gyro() {
 
     struct bno055_gyro_offset_t gyro_offsets;
     bno055_read_gyro_offset(&gyro_offsets);
-    lcd_printf("ACCEL %x, %x, %x, %x, GYRO %x, %x, %x", accel_offsets.r, accel_offsets.x, accel_offsets.y, accel_offsets.z, gyro_offsets.x, gyro_offsets.y, gyro_offsets.z);
 
-    while(1) {
+    struct bno055_mag_offset_t mag_offsets;
+    bno055_read_mag_offset(&mag_offsets);
+    lcd_printf("%x, %x, %x, %x, %x, %x, %x, %x, %x, %x, %x", accel_offsets.r, accel_offsets.x, accel_offsets.y, accel_offsets.z,
+               gyro_offsets.x, gyro_offsets.y, gyro_offsets.z, mag_offsets.x, mag_offsets.y, mag_offsets.z, mag_offsets.r);
+
+    while(flag) {
+        if (uart_get_char()) {
+            flag = false;
+        }
     }
 }
 

@@ -29,5 +29,6 @@ void uart_interrupt_init();
 
 void uart_init_wrapper();
 
+char uart_get_char();
 
 #endif /* UART_H_ */

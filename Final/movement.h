@@ -16,7 +16,9 @@
 #include "movement.h"
 #include "scan.h"
 
-void turn_deg(float deg, int16_t speed);
+void turn_deg(oi_t* self, float deg, int16_t speed);
+
+void gyro_turn_deg(float deg, int16_t speed);
 /*
  * Given oi_t sensor data and degrees
  * Turns left at speed "speed" left if degrees less than 0
