@@ -102,9 +102,7 @@ def getLatestOrder():
     data = data.get("records")
     # now data is a list
     data = data[0]
-    data = data.pop("house")
-    data = data.pop("character")
-    # Return the data
+    data = [data.pop("house").pop("character"), data.pop("status")]
     return data
 
 

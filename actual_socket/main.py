@@ -76,11 +76,16 @@ def orderHandler():
 
 
 def checkForOrder():
-    orderLetter = db.getLatestOrder()
-    # send the order to the robot
-    conn.send(orderLetter.encode())
-    # print the type of orders
-    print("Orders Sent " + str(orderLetter))
+    [orderLetter, status, id] = db.getLatestOrder()
+    if orderLetter is not None and status == "Preparing":
+        # send the order to the robot
+        conn.send(orderLetter.encode())
+        # print the type of orders
+        print("Orders Sent " + str(orderLetter))
+        # update the status of the order
+        setOrderStatus(id, "Delivering")
+    else:
+        print("No Orders")
 
 
 def setOrderStatus(order_id: str, status: str):
