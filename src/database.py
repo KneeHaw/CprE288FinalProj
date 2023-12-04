@@ -55,7 +55,7 @@ def getDestination():
 # Gets the current date and time in the database format
 
 
-def getOrders():
+def getOrder():
     """Returns a list of orders with the following columns: id, goods,
     total_price, house, client. The house and client columns are
     foreign keys to the houses and clients table. The orders are the
@@ -73,7 +73,11 @@ def getOrders():
             "house.character"
         ]
     })
+    # Reduce to one order
+    data = data[0]
     print(data)
+
+
 
 
 def getLatestOrder():

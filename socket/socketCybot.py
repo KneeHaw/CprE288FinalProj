@@ -2,6 +2,7 @@
 # Date: 09/27/2023
 # Description: Simple Threaded Client for CprE 288 Cybot
 
+import database as db
 import socket
 from msvcrt import getch
 import threading
@@ -12,7 +13,8 @@ import time
 # Define Client Variables
 HOST = '192.168.1.1'
 PORT = 288
-conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Establish TCP connection
+# Establish TCP connection
+conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # graph_thread = threading.Thread(target=graph_data, args=(), daemon=True)
 global exit_
 global draw_
@@ -22,7 +24,8 @@ global_draw = 0
 
 
 def get_data(file_name='client_log.txt'):
-    array = np.genfromtxt(file_name)  # If graph data, save data to another file, and clear the current data file
+    # If graph data, save data to another file, and clear the current data file
+    array = np.genfromtxt(file_name)
     array = np.array(((array[:, 0] * np.pi) / 180, array[:, 1]))  # [theta, r]
     r_max = np.max(np.abs(array[1:]))
     # Convert data to polar coordinates
@@ -59,6 +62,21 @@ def draw_plot():
         plt.draw()
         plt.pause(.1)
         plt.clf()
+
+
+def orderHandler():
+    # Infinite loop to check for orders
+    while True:
+        order = db.getOrder()
+        if order:
+            # Send orders to robot
+            # Send order house character (The house to deliver to)
+            conn.send(order.house.character)
+            print("Orders Sent")
+
+
+def setOrderStatus(order_id: str, status: str):
+    db.updateOrderStatus(order_id, status)
 
 
 def messageHandler():
@@ -107,12 +125,15 @@ def main():
     print("|---Client Commands ---\n| Exit program 'x'\n| Graph Data 'g'\n| Clear data file 'c'\n| Send long string 'l'")
 
     # Both message_thread and key_press_thread are blocking, create daemon threads (Don't need to finish for exit)
-    message_thread = threading.Thread(target=messageHandler, args=(), daemon=True)
+    message_thread = threading.Thread(
+        target=messageHandler, args=(), daemon=True)
     key_press_thread = threading.Thread(target=keyPress, args=(), daemon=True)
     graph_process = Process(target=draw_plot, args=(), daemon=True)
+    order_process = Process(target=orderHandler, args=(), daemon=True)
     message_thread.start()
     key_press_thread.start()
     graph_process.start()
+    order_process.start()
 
     # Hold this loop until global exit is set
     while True:
