@@ -56,9 +56,9 @@ def getDestination():
 
 
 def getOrders():
-    """Returns a list of orders with the following columns: id, goods, 
+    """Returns a list of orders with the following columns: id, goods,
     total_price, house, client. The house and client columns are
-    foreign keys to the houses and clients table. The orders are the 
+    foreign keys to the houses and clients table. The orders are the
     orders that are in the database to be delivered."""
     # Get the xata client
     client = getClient()
@@ -69,7 +69,8 @@ def getOrders():
             "goods",
             "total_price",
             "house",
-            "client"
+            "client",
+            "house.character"
         ]
     })
     print(data)
