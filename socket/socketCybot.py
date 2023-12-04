@@ -2,6 +2,7 @@
 # Date: 09/27/2023
 # Description: Simple Threaded Client for CprE 288 Cybot
 
+import time
 import database as db
 import socket
 from msvcrt import getch
@@ -9,7 +10,6 @@ import threading
 from multiprocessing import Process
 import numpy as np
 from matplotlib import pyplot as plt
-import time
 # Define Client Variables
 HOST = '192.168.1.1'
 PORT = 288
@@ -69,10 +69,13 @@ def orderHandler():
     while True:
         order = db.getOrder()
         if order:
-            # Send orders to robot
-            # Send order house character (The house to deliver to)
-            conn.send(order.house.character)
-            print("Orders Sent")
+            if order.status == 'Preparing':
+                # Send orders to robot
+                # Send order house character (The house to deliver to)
+                conn.send(order.house.character)
+                setOrderStatus(order.id, 'Delivering')
+        # Sleep for 1 second
+        time.sleep(1)
 
 
 def setOrderStatus(order_id: str, status: str):
