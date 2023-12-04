@@ -95,6 +95,7 @@ def sendBotPosition(lat: float, long: float):
 
 
 def setOrderStatus(order_id: str, status: str):
+    """Sets the status of the order in the database"""
     db.updateOrderStatus(order_id, status)
 
 
