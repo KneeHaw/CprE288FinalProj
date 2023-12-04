@@ -214,4 +214,3 @@ def getObstacle(obstacle_id: str):
     return data
 
 
-def getHouse(house_id: string):
