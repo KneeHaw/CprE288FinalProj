@@ -17,6 +17,7 @@ def getClient() -> XataClient:
         raise ValueError("API_KEY is not defined")
     return XataClient(db_url=DB_URL, api_key=API_KEY)
 
+
 # marker has a date, lat, long
 
 
@@ -52,6 +53,7 @@ def getDestination():
     results = records.get("order", "all")
     return results
 
+
 # Gets the current date and time in the database format
 
 
@@ -63,21 +65,22 @@ def getOrder():
     # Get the xata client
     client = getClient()
 
-    data = client.data().query("orders", {
-        "columns": [
-            "id",
-            "goods",
-            "total_price",
-            "house",
-            "client",
-            "house.character"
-        ]
-    })
+    data = client.data().query(
+        "orders",
+        {
+            "columns": [
+                "id",
+                "goods",
+                "total_price",
+                "house",
+                "client",
+                "house.character",
+            ]
+        },
+    )
     # Reduce to one order
-    data = data[0]
     print(data)
-
-
+    return data
 
 
 def getLatestOrder():
@@ -86,18 +89,21 @@ def getLatestOrder():
     client = getClient()
 
     # Quert Database for orders
-    data = client.data().query("orders", {
-        "columns": [
-            "id",
-            "xata.createdAt"
-            "goods",
-            "total_price",
-            "house",
-            "house.letter",
-            "client"
-        ],
-        "limit": 1
-    })
+    data = client.data().query(
+        "orders",
+        {
+            "columns": [
+                "house.character",
+            ],
+        },
+    )
+
+    # Reduce to one order
+    data = data.get("records")
+    # now data is a list
+    data = data[0]
+    data = data.pop("house")
+    data = data.pop("character")
     # Return the data
     return data
 
@@ -111,10 +117,9 @@ def createObstacle(latitude: float, longitude: float):
     client = getClient()
 
     # Insert the obstacle
-    data = client.records().insert("obstacles", {
-        "latitude": latitude,
-        "longitude": longitude
-    })
+    data = client.records().insert(
+        "obstacles", {"latitude": latitude, "longitude": longitude}
+    )
 
     # Return the data
     return data
@@ -128,16 +133,10 @@ def getHouses():
     client = getClient()
 
     # Quert Database for houses
-    data = client.data().query("houses", {
-        "columns": [
-            "id",
-            "latitude",
-            "longitude",
-            "photo",
-            "name",
-            "character"
-        ]
-    })
+    data = client.data().query(
+        "houses",
+        {"columns": ["id", "latitude", "longitude", "photo", "name", "character"]},
+    )
     return data
 
 
@@ -147,9 +146,7 @@ def updateOrderStatus(order_id: str, status: str):
     client = getClient()
 
     # Update the order status
-    data = client.records().update("order", order_id, {
-        "status": status
-    })
+    data = client.records().update("order", order_id, {"status": status})
 
     # Return the data
     return data
@@ -161,10 +158,9 @@ def updateObstacle(obstacle_id: str, latitude: float, longitude: float):
     client = getClient()
 
     # Update the obstacle
-    data = client.records().update("obstacles", obstacle_id, {
-        "latitude": latitude,
-        "longitude": longitude
-    })
+    data = client.records().update(
+        "obstacles", obstacle_id, {"latitude": latitude, "longitude": longitude}
+    )
 
     # Return the data
     return data
@@ -190,13 +186,9 @@ def getObstacles():
     client = getClient()
 
     # Quert Database for obstacles
-    data = client.data().query("obstacles", {
-        "columns": [
-            "id",
-            "latitude",
-            "longitude"
-        ]
-    })
+    data = client.data().query(
+        "obstacles", {"columns": ["id", "latitude", "longitude"]}
+    )
     return data
 
 
@@ -206,16 +198,8 @@ def getObstacle(obstacle_id: str):
     client = getClient()
 
     # Quert Database for obstacle
-    data = client.data().query("obstacles", {
-        "columns": [
-            "id",
-            "latitude",
-            "longitude"
-        ],
-        "filter": {
-            "id": obstacle_id
-        }
-    })
+    data = client.data().query(
+        "obstacles",
+        {"columns": ["id", "latitude", "longitude"], "filter": {"id": obstacle_id}},
+    )
     return data
-
-
