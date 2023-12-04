@@ -1,4 +1,6 @@
 
 /venv/*
 */venv/
+src/venv/*
+src/*/venv/*
 
