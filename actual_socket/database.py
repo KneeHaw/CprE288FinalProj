@@ -102,7 +102,7 @@ def getLatestOrder():
     data = data.get("records")
     # now data is a list
     data = data[0]
-    data = [data.pop("house").pop("character"), data.pop("status")]
+    data = [data.pop("house").pop("character"), data.pop("status"), data.pop("id")]
     return data
 
 
@@ -200,4 +200,17 @@ def getObstacle(obstacle_id: str):
         "obstacles",
         {"columns": ["id", "latitude", "longitude"], "filter": {"id": obstacle_id}},
     )
+    return data
+
+def addRoombaPosition(latitude: float, longitude: float):
+    """Adds a roomba position to the database"""
+    # Get the xata client
+    client = getClient()
+
+    # Insert the roomba position
+    data = client.records().insert(
+        "roomba", {"latitude": latitude, "longitude": longitude}
+    )
+
+    # Return the data
     return data

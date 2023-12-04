@@ -76,6 +76,7 @@ def orderHandler():
 
 
 def checkForOrder():
+    """Checks the database for orders and sends them to the robot if ready"""
     [orderLetter, status, id] = db.getLatestOrder()
     if orderLetter is not None and status == "Preparing":
         # send the order to the robot
@@ -86,6 +87,11 @@ def checkForOrder():
         setOrderStatus(id, "Delivering")
     else:
         print("No Orders")
+
+
+def sendBotPosition(lat: float, long: float):
+    """Sends the bot's position to the database"""
+    db.addRoombaPosition(lat, long)
 
 
 def setOrderStatus(order_id: str, status: str):
@@ -138,7 +144,8 @@ def main():
     )
 
     # Both message_thread and key_press_thread are blocking, create daemon threads (Don't need to finish for exit)
-    message_thread = threading.Thread(target=messageHandler, args=(), daemon=True)
+    message_thread = threading.Thread(
+        target=messageHandler, args=(), daemon=True)
     order_thread = threading.Thread(target=orderHandler, args=(), daemon=True)
     key_press_thread = threading.Thread(target=keyPress, args=(), daemon=True)
     # graph_process = Process(target=draw_plot, args=(), daemon=True)
