@@ -9,10 +9,12 @@ from multiprocessing import Process
 import numpy as np
 from matplotlib import pyplot as plt
 import time
+import database as db
 # Define Client Variables
 HOST = '192.168.1.1'
 PORT = 288
-conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Establish TCP connection
+# Establish TCP connection
+conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # graph_thread = threading.Thread(target=graph_data, args=(), daemon=True)
 global exit_
 global draw_
@@ -20,12 +22,15 @@ deg_inc = 2
 lines = int(360 / deg_inc)
 global_draw = 0
 
+
 def build_string(character, string):
     string = string + character
     return string
 
+
 def get_data(file_name='client_log.txt'):
-    array = np.genfromtxt(file_name, invalid_raise=False)  # If graph data, save data to another file, and clear the current data file
+    # If graph data, save data to another file, and clear the current data file
+    array = np.genfromtxt(file_name, invalid_raise=False)
     array = np.array(((array[:, 0] * np.pi) / 180, array[:, 1]))  # [theta, r]
     r_max = np.max(np.abs(array[1:]))
     # Convert data to polar coordinates
@@ -62,6 +67,24 @@ def draw_plot():
         plt.draw()
         plt.pause(.1)
         plt.clf()
+
+
+def orderHandler():
+    # Infinite loop to check for orders
+    while True:
+        orders = db.getOrders()
+        if orders:
+            # Send orders to robot
+            for order in orders:
+                # Send order house character (The house to deliver to)
+                conn.send(order.house.character)
+                time.sleep(1)
+            conn.send('e'.encode())
+            print("Orders Sent")
+
+
+def setOrderStatus(order_id: str, status: str):
+    db.updateOrderStatus(order_id, status)
 
 
 def messageHandler():
@@ -109,12 +132,15 @@ def main():
     print("|---Client Commands ---\n| Exit program 'x'\n| Graph Data 'g'\n| Clear data file 'c'\n| Send long string 'l'")
 
     # Both message_thread and key_press_thread are blocking, create daemon threads (Don't need to finish for exit)
-    message_thread = threading.Thread(target=messageHandler, args=(), daemon=True)
+    message_thread = threading.Thread(
+        target=messageHandler, args=(), daemon=True)
+    order_thread = threading.Thread(target=orderHandler, args=(), daemon=True)
     key_press_thread = threading.Thread(target=keyPress, args=(), daemon=True)
     graph_process = Process(target=draw_plot, args=(), daemon=True)
     message_thread.start()
     key_press_thread.start()
     # graph_process.start()
+    order_thread.start()
 
     # Hold this loop until global exit is set
     while True:
