@@ -6,6 +6,6 @@
     - Header files
     - note: these need to be merged into a single directory for compilation, they are seprated for readability
 2. Socket Program
-    -directory
+    - directory
 3. Website Code
-    -directory
+    - directory
