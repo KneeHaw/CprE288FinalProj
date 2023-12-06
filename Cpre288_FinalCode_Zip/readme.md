@@ -5,7 +5,8 @@
   - C files
   - Header files
   - note: these need to be merged into a single directory for compilation, they are seprated for readability
-2 Socket Program
+
+1 Socket Program
   -directory
-3 Website Code
+1 Website Code
   -directory
