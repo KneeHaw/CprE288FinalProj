@@ -1,0 +1,417 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: This is the main map component for the Roomba Dash project. 
+import Leaflet from "./Leaflet.astro";
+import DeveloperMenu from "./svelte/DeveloperMenu.svelte";
+import ShoppingCart from "./svelte/ShoppingCartMenu.svelte";
+import Shop from "./svelte/ShopMenu.svelte";
+import OrderNumIndicator from "./svelte/OrderNumIndicator.svelte";
+import { Badge } from "flowbite-svelte";
+import OrderMenu from "./svelte/OrderMenu.svelte";
+---
+
+<head>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+  />
+  <title>Roomba Dash Leaf</title>
+</head>
+<body>
+  <div id="map">
+    <Leaflet container="map" containerstyle="height: 80vh" />
+    <div class="sidebar z-0">
+      <button
+        aria-label="close sidebar"
+        type="button"
+        class="close-button rounded-lg bg-red-200"
+      >
+        <svg>
+          <use xlink:href="#icon-clear"></use>
+        </svg>
+      </button>
+
+      <ul class="sidebar-menu rounded-lg z-0">
+        <li class="menu-item" data-item="shopping">
+          <Badge
+            rounded
+            class="w-4 h-4 ml-2 font-semibold text-black bg-gray-300 dark:text-black dark:bg-red"
+          >
+            <OrderNumIndicator client:only="svelte" />
+          </Badge>
+          <svg>
+            <use xlink:href="#shopping-cart"></use>
+          </svg>
+        </li>
+        <li class="menu-item" data-item="shopmenu">
+          <svg>
+            <use xlink:href="#icon-shop-menu"></use>
+          </svg>
+        </li>
+        <li class="menu-item" data-item="ordermenu">
+          <svg>
+            <use xlink:href="#icon-orders"></use>
+          </svg>
+        </li>
+      </ul>
+
+      <div class="sidebar-content z-0">
+        <div class="item-content" id="shopping">
+          <h2>Shopping cart</h2>
+          <div class="content">
+            <ShoppingCart client:only="svelte" />
+          </div>
+        </div>
+
+        <div class="item-content z-0" id="shopmenu">
+          <h2>Shop Menu</h2>
+          <div class="content text-black">
+            <Shop client:only="svelte" />
+          </div>
+        </div>
+
+        <div class="item-content z-0" id="ordermenu">
+          <h2>Your Orders</h2>
+          <div class="content">
+            <OrderMenu client:only="svelte" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none">
+      <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+        <path
+          class="mighty"
+          d="M15.422 16.594 14.016 18l-6-6 6-6 1.406 1.406L10.828 12z"></path>
+      </symbol>
+      <symbol id="icon-clear" viewBox="0 0 24 24">
+        <path
+          class="mighty"
+          d="M18.984 6.422 13.406 12l5.578 5.578-1.406 1.406L12 13.406l-5.578 5.578-1.406-1.406L10.594 12 5.016 6.422l1.406-1.406L12 10.594l5.578-5.578z"
+        ></path>
+      </symbol>
+
+      <symbol id="icon-menu" viewBox="0 0 24 24">
+        <path
+          class="mighty"
+          d="M3 13h18a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2zm0-6h18a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2zm0 12h18a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2z"
+        ></path>
+      </symbol>
+
+      <symbol id="icon-shop-menu" viewBox="0 0 24 24">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-shopping-bag"
+        >
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+          <path class="mighty" d="M3 6h18"></path>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+         >
+      </symbol>
+      <symbol id="icon-dev" viewBox="0 0 24 24">
+        <svg
+          viewBox="0 0 20 20"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <g id="layer1">
+              <path
+                class="mighty"
+                d="M 0 2 L 0 18 L 20 18 L 20 2 L 0 2 z M 1 3 L 19 3 L 19 5 L 1 5 L 1 3 z M 1 6 L 19 6 L 19 17 L 1 17 L 1 6 z M 7.6464844 8.1464844 L 4.2929688 11.5 L 7.6464844 14.853516 L 8.3535156 14.146484 L 5.7070312 11.5 L 8.3535156 8.8535156 L 7.6464844 8.1464844 z M 12.353516 8.1464844 L 11.646484 8.8535156 L 14.292969 11.5 L 11.646484 14.146484 L 12.353516 14.853516 L 15.707031 11.5 L 12.353516 8.1464844 z "
+                style=" fill-opacity:1; stroke:none; stroke-width:0px;"></path>
+            </g>
+          </g>
+        </svg>
+      </symbol>
+      <symbol id="shopping-cart" viewBox="0 0 24 24">
+        <svg
+          fill="#000000"
+          version="1.1"
+          id="Capa_1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 0 902.86 902.86"
+          xml:space="preserve"
+          ><g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"></g>
+          <g id="SVGRepo_iconCarrier">
+            <g>
+              <g>
+                <path
+                  class="mighty"
+                  d="M671.504,577.829l110.485-432.609H902.86v-68H729.174L703.128,179.2L0,178.697l74.753,399.129h596.751V577.829z M685.766,247.188l-67.077,262.64H131.199L81.928,246.756L685.766,247.188z"
+                ></path>
+                <path
+                  class="mighty"
+                  d="M578.418,825.641c59.961,0,108.743-48.783,108.743-108.744s-48.782-108.742-108.743-108.742H168.717 c-59.961,0-108.744,48.781-108.744,108.742s48.782,108.744,108.744,108.744c59.962,0,108.743-48.783,108.743-108.744 c0-14.4-2.821-28.152-7.927-40.742h208.069c-5.107,12.59-7.928,26.342-7.928,40.742 C469.675,776.858,518.457,825.641,578.418,825.641z M209.46,716.897c0,22.467-18.277,40.744-40.743,40.744 c-22.466,0-40.744-18.277-40.744-40.744c0-22.465,18.277-40.742,40.744-40.742C191.183,676.155,209.46,694.432,209.46,716.897z M619.162,716.897c0,22.467-18.277,40.744-40.743,40.744s-40.743-18.277-40.743-40.744c0-22.465,18.277-40.742,40.743-40.742 S619.162,694.432,619.162,716.897z"
+                ></path>
+              </g>
+            </g>
+          </g></svg
+        >
+      </symbol>
+
+      <symbol id="icon-orders" viewBox="0 0 24 24">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-file-signature"
+          ><path
+            d="M20 19.5v.5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8.5L18 5.5"
+          ></path><path d="M8 18h1"></path><path
+            d="M18.42 9.61a2.1 2.1 0 1 1 2.97 2.97L16.95 17 13 18l.99-3.95 4.43-4.44Z"
+          ></path></svg
+        >
+      </symbol>
+    </svg>
+  </div>
+</body>
+
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap");
+
+  .sidebar-menu {
+    background: var(--gradient-subtle);
+  }
+
+  .menu-item {
+    foreground: var(--accent-text-over);
+  }
+
+  .mighty {
+    fill: var(--gray-0);
+  }
+
+  .sidebar-content {
+    background: var(--gray-999);
+  }
+
+  *,
+  :after,
+  :before {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  body,
+  html,
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  .ccontainer {
+    position: relative;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    background-color: #f1f1f1;
+  }
+
+  svg:not(:root) {
+    overflow: hidden;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .leaflet-left {
+    transform: translateX(5px);
+  }
+
+  .active-sidebar .leaflet-left {
+    transform: translateX(300px);
+    transition: transform 350ms;
+  }
+
+  .sidebar {
+    display: flex;
+    position: absolute;
+    width: 46px;
+    max-width: 300px;
+    z-index: 999;
+    box-shadow: none;
+    overflow: hidden;
+    border-right: 2px solid var(--accent-overlay);
+    height: 100%;
+  }
+
+  .active-sidebar .sidebar {
+    max-width: 560px;
+    width: 100%;
+  }
+
+  @media (min-width: 300px) {
+    .sidebar {
+      top: 10px;
+      left: 10px;
+      height: calc(100% - 20px);
+      transition: width 500ms;
+    }
+
+    .leaflet-left {
+      transform: translateX(55px);
+    }
+
+    .active-sidebar .sidebar {
+      max-width: 480px;
+      width: 100%;
+      transition: width 1s;
+    }
+  }
+
+  .close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    padding: 0;
+    border-radius: 3px;
+    background: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .active-sidebar .close-button {
+    pointer-events: all;
+    opacity: 1;
+    transition: opacity 100ms ease-in-out;
+  }
+
+  .sidebar .close-button svg {
+    fill: #fff;
+  }
+
+  .sidebar::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    top: 0;
+    left: 44px;
+    width: 100%;
+    height: 40px;
+    background: var(--accent-dark);
+  }
+
+  .active-sidebar .sidebar::before {
+    left: 42px;
+  }
+
+  .sidebar svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+
+  .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    height: 100%;
+  }
+
+  .sidebar-menu li {
+    padding: 10px 11px;
+    cursor: pointer;
+  }
+
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(180deg);
+    }
+  }
+
+  .active-item {
+    background: var(--accent-regular);
+  }
+
+  .active-item svg {
+    fill: #fff;
+  }
+
+  .item-content {
+    display: none;
+    height: 100%;
+  }
+
+  .item-content .content {
+    overflow: auto;
+    margin-top: 15px;
+    height: calc(100% - 15px);
+  }
+
+  .sidebar-content {
+    width: 100%;
+    pointer-events: none;
+    transition: opacity 500ms;
+  }
+
+  .active-sidebar .sidebar-content {
+    opacity: 1;
+    pointer-events: visible;
+    transition: opacity 200ms;
+  }
+
+  .sidebar-content h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: var(--accent-dark);
+    padding: 5px;
+    color: #fff;
+    white-space: nowrap;
+    width: calc(100% - 10px);
+    height: 25px;
+    margin: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .active-content {
+    display: block;
+    pointer-events: all;
+  }
+</style>

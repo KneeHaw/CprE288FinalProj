@@ -1,0 +1,61 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: Hero Component for the About Page of the Roomba Rush Website
+interface Props {
+  title: string;
+  tagline?: string;
+  align?: "start" | "center";
+}
+
+// Astro Properties that define the alignment, title, and tagline of the hero
+const { align = "center", tagline, title } = Astro.props;
+---
+
+<!--  Hero Component for the About Page -->
+<div class:list={["hero stack gap-4", align]}>
+  <div class="stack gap-2">
+    <h1 class="title" transition:name="hero-title" transition:animate="slide">
+      {title}
+    </h1>
+    {tagline && <p class="tagline">{tagline}</p>}
+  </div>
+  <slot />
+</div>
+
+<!-- Styles for the Hero Component for the About Page -->
+<style>
+  .hero {
+    font-size: var(--text-lg);
+    text-align: center;
+  }
+
+  .title,
+  .tagline {
+    max-width: 37ch;
+    margin-inline: auto;
+  }
+
+  .title {
+    font-size: var(--text-3xl);
+    color: var(--gray-0);
+  }
+
+  @media (min-width: 50em) {
+    .hero {
+      font-size: var(--text-xl);
+    }
+
+    .start {
+      text-align: start;
+    }
+
+    .start .title,
+    .start .tagline {
+      margin-inline: unset;
+    }
+
+    .title {
+      font-size: var(--text-5xl);
+    }
+  }
+</style>

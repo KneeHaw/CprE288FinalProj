@@ -1,0 +1,215 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AboutHero from "../components/HeroAbout.astro";
+import TeamMember from "../components/TeamMember.astro";
+import {Twitter,Linkedin} from "lucide-astro";
+---
+
+<BaseLayout
+    title="About | Roomba Dash"
+    description="About Roomba Dash and it development."
+>
+    <div class="stack gap-20">
+        <main class="wrapper about">
+            <AboutHero
+                title="About"
+                tagline="Thanks for stopping by. Read below to learn more Roomba Dash and it's development."
+            />
+
+            <section>
+                <h2 class="section-title">Background</h2>
+                <div class="content">
+                    <p>
+                        Our design is for a semi-autonomous vehicle that
+                        delivers goods to customers in the same vain as
+                        DoorDash; thus, we named our project RoombaDash. Our
+                        vehicle is able to detect potholes, and drive between
+                        the lines in the road to safely deliver the selected
+                        goods selected/ordered by spectators on this website.
+                        While allowing customers to view and track the progress
+                        of their order, the vehicle is also able to emit a sound
+                        when it reaches a delivery location.
+                    </p>
+                    <br />
+                    <p>
+                        The delivery of goods is an problem as old as time. The
+                        first delivery service was established in 2400 BC by the
+                        Babylonians. The Babylonians used a network of
+                        messengers to deliver goods. The first delivery service
+                        in the United States was established in 1693 by William
+                        Goddard. Goddard’s service was a weekly newspaper
+                        delivery service. The first delivery service that
+                        delivered goods to customers was established in 1782 by
+                        Benjamin Franklin. Franklin’s service was a delivery
+                        service for the United States Postal Service. As a
+                        group, noticing the adancements of autonomous vehicles,
+                        we decided to create a representation of the future of
+                        delivery services.
+                    </p>
+                    <br />
+                    <div class="flex items-center justify-center">
+                        <img
+                            class="h-auto max-w-lg rounded-lg justify-center items-center"
+                            src="https://wcpltn.files.wordpress.com/2019/08/goddard.jpg"
+                            alt="William Goddard"
+                        />
+                    </div>
+                    <p class="text-center text-sm">William Goddard</p>
+                    <br />
+                    <p>
+                        Throughout the development of our project, we have
+                        learned a lot about the process of working with embbeded
+                        systems while also focusing on the users needs and
+                        wants. We quickly relized that the user experience is
+                        just as important as the functionality of the vehicle.
+                        We also learned that the process of developing a product
+                        is not linear meaning that even a perfectly designed
+                        plan might need to be changed. Essentially meaning that
+                        the process of developing a product is a cycle of
+                        planning, designing, implementing, and testing.
+                    </p>
+                    <br />
+                    <p>
+                        Relizing early on that the user experience is just as
+                        important as the functionality of the vehicle, in
+                        addition to the vehicle, we also created a website that
+                        allows users to view and track the progress. As we
+                        wanted the Teachers and TAs to be able to view the
+                        progress of the vehicle, order goods for delivery, and
+                        receive updates, we wanted to ensure that this website
+                        is viewable on all devices, so we used a mobile-first
+                        design.
+                    </p>
+                </div>
+                <section>
+                    <h2 class="section-title">Development</h2>
+                    <div class="content">
+                        <p>
+                            We started the development of our project by
+                            creating a plan. We created a plan that included the
+                            desired functionality of the robot, website, and
+                            backend. We also created a plan that included the
+                            desired timeline for the development of the project.
+                        </p>
+                        <br />
+                        <p>
+                            After creating a plan, we started the development of
+                            the project. We used <a href="https://astro.build/"
+                                >Astro</a
+                            >,
+                            <a href="https://svelte.dev/">Svelte</a>,
+                            <a href="https://reactjs.org/">React</a>,
+                            <a href="https://tailwindcss.com/">Tailwind CSS</a>,
+                            , and a <a href="https://www.postgresql.org/"
+                                >Postgres</a
+                            > Database; to create a website that allows users to
+                            receive updates about the robot's location just like
+                            DoorDash.
+                        </p>
+                        <br />
+                        <p>
+                            During the development of the website, we also
+                            started the development of the robot. We started the
+                            development of the robot by creating a plan for the
+                            robot. We created a plan that included the desired
+                            functionality of the robot: the ability to detect
+                            potholes, the ability to drive between the lines in
+                            the road, and the ability to emit a sound when it
+                            reaches a delivery location, and object
+                            detection/avoidance. We also created a plan that
+                            included the desired timeline for the development of
+                            the robot.
+                        </p>
+                        <br />
+                        <p>
+                            During the development of the robot, we also started
+                            the development of the backend. We started the
+                            development of the backend by creating a plan for
+                            the backend. We created a plan that included the
+                            desired functionality of the backend: the ability to
+                            receive orders from the database, the ability to
+                            send updates to the database, and the ability to
+                            send updates to the robot over a socket connection.
+                            We also created a plan that included the desired
+                            timeline for the development of the backend. The
+                            backend was created using Python and utilizes a
+                            Postgres Database.
+                        </p>
+                    </div>
+                </section>
+                <!-- About Team Section -->
+                <section>
+                    <h2 class="section-title">Team</h2>
+                    <TeamMember >
+                        <img slot="avatark" src="" alt="Conner" />
+                        <p slot="name">Conner Ohnesorge</p>
+                        <p slot="specialization">Electrical Engineering</p>
+                        <a slot="email" href="mailto:conneroisu@outlook.com">conneroisu@outlook.com</a>
+                        <a slot="twitter" href="https://twitter.com/ConnerOhnesorge"><Twitter/></a>
+                        <a slot="linkedin" href="https://www.linkedin.com/in/connerohnesorge/"><Linkedin/></a>
+                    </TeamMember>
+                    
+                </section>
+            </section>
+        </main>
+    </div>
+
+    <style>
+        .about {
+            display: flex;
+            flex-direction: column;
+            gap: 3.5rem;
+        }
+
+        img {
+            margin-top: 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: var(--gray-200);
+        }
+
+        .section-title {
+            grid-column-start: 1;
+            font-size: var(--text-xl);
+            color: var(--gray-0);
+        }
+
+        .content {
+            grid-column: 2 / 4;
+        }
+
+        .content :global(a) {
+            text-decoration: 1px solid underline transparent;
+            text-underline-offset: 0.25em;
+            transition: text-decoration-color var(--theme-transition);
+        }
+
+        .content :global(a:hover),
+        .content :global(a:focus) {
+            text-decoration-color: currentColor;
+        }
+
+        @media (min-width: 50em) {
+            .about {
+                display: grid;
+                grid-template-columns: 1fr 60% 1fr;
+            }
+
+            .about > :global(:first-child) {
+                grid-column-start: 2;
+            }
+
+            section {
+                display: contents;
+                font-size: var(--text-lg);
+            }
+        }
+    </style>
+</BaseLayout>

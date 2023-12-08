@@ -1,0 +1,44 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: Footer for Roomba Rush
+const currentYear = new Date().getFullYear();
+---
+
+<!-- Footer for the site -->
+<footer>
+  <div class="group">
+    <p>&copy; {currentYear} Roomba Dash</p>
+  </div>
+</footer>
+<style>
+  footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-top: auto;
+    padding: 3rem 2rem 3rem;
+    text-align: center;
+    color: var(--gray-400);
+    font-size: var(--text-sm);
+  }
+
+  .group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 50em) {
+    footer {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 2.5rem 5rem;
+    }
+
+    .group {
+      flex-direction: row;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+import BaseLayout from "../layouts/BaseLayout.astro";
+import CrashedImg from "../assets/crashed.jpg";
+---
+
+<BaseLayout title="Not Found" description="404 Error — this page was not found">
+  <div class="">
+    <div class="flex flex-col items-center">
+      <p class="roomba-title text-4xl">Oops! Page Not Found</p>
+      <p class="roomba-message align-middle text-center">
+        We couldn't find the page you were looking for.<br /> Watch your speed dasher.
+      </p>
+      <a
+        href="/"
+        class="roomba-link bg-red-400 hover:bg-red-200 rounded-full px-4 py-2 mt-4 text-black text-xl m-4"
+        >Go back to Home</a
+      >
+
+      <img
+        src={CrashedImg.src}
+        alt="Roomba crashed"
+        class="roomba-img w-1/4 relative top-0 left-0"
+      />
+    </div>
+  </div>
+</BaseLayout>

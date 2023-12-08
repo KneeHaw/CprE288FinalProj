@@ -1,0 +1,69 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: Hero component for the home page of Roomba Rush
+import Pill from "./Pill.astro";
+
+interface Props {
+  title: string;
+  tagline?: string;
+  align?: "start" | "center";
+}
+
+const { align = "center", tagline, title } = Astro.props;
+---
+
+<!-- Hero for the home page -->
+<div class:list={["hero stack gap-4", align]}>
+  <div class="stack gap-2">
+    <h1 class="title" transition:name="hero-title" transition:animate="slide">
+      {title}
+    </h1>
+    {tagline && <p class="tagline">{tagline}</p>}
+  </div>
+  <slot />
+
+  <div class="inline-flex">
+    <!-- Button to go to the map page -->
+    <a href="/map" class="btn btn-primary p-7"><Pill>View Map</Pill></a>
+    <!-- Button to go to the about page -->
+    <a href="/about" class="btn btn-primary p-7"><Pill>About Us</Pill></a>
+  </div>
+</div>
+
+<!-- Styles for the hero -->
+<style>
+  .hero {
+    font-size: var(--text-lg);
+    text-align: center;
+  }
+
+  .title,
+  .tagline {
+    max-width: 37ch;
+    margin-inline: auto;
+  }
+
+  .title {
+    font-size: var(--text-3xl);
+    color: var(--gray-0);
+  }
+
+  @media (min-width: 50em) {
+    .hero {
+      font-size: var(--text-xl);
+    }
+
+    .start {
+      text-align: start;
+    }
+
+    .start .title,
+    .start .tagline {
+      margin-inline: unset;
+    }
+
+    .title {
+      font-size: var(--text-5xl);
+    }
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: A simple Leaflet map component for Astro for the Roomba Rush Website.
+import "leaflet/dist/leaflet.css";
+import "../styles/main.css";
+
+export interface Props {
+  container: string;
+  containerstyle: string;
+}
+
+const {
+  container,
+  containerstyle,
+} = Astro.props;
+---
+
+<leaflet-map
+  data-containerstyle={containerstyle}
+>
+  <div id={container} style={containerstyle}></div>
+  <script>
+    import { LeafletMap } from "./custom/LeafletMap";
+    customElements.define("leaflet-map", LeafletMap);
+  </script>
+
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    html,
+    body,
+    #map {
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</leaflet-map>

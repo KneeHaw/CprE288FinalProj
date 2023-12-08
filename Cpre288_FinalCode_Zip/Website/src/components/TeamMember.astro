@@ -1,0 +1,104 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: The card component is used to display information in a large card format for the Roomba Rush Website.
+---
+<div
+  class="border text-card-foreground w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl m-8"
+  data-v0-t="card"
+>
+  <div class="md:flex">
+    <div class="p-8">
+      <div class="flex items-center">
+        <span class="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+          <span class="flex h-full w-full items-center justify-center rounded-full bg-muted">
+            <slot name="avatar" />
+          </span>
+        </span>
+        <div class="ml-4">
+          <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">
+            <slot name="name" />
+          </div>
+          <div
+            class="block mt-1 text-lg leading-tight font-medium text-black hover:underline"
+          >
+            <slot name="specialization" />
+          </div>
+        </div>
+      </div><p class="mt-2 text-gray-500">
+        <p>Iowa State University</p>
+      </p><div class="mt-5">
+        <h4 class="font-semibold text-lg mb-2">Contact</h4><p
+          class="text-gray-500"
+        >
+          Email: 
+          <slot name="email" />
+        </p><p class="text-gray-500">Phone: +1 (234) 567-890</p>
+      </div><div class="mt-5">
+        <h4 class="font-semibold text-lg mb-2">
+          Socials
+          <nav class="flex space-x-4">
+              <slot name="twitter"/>
+            
+            <slot name="linkedin"/>
+            <a aria-label="GitHub Profile" href="#" rel="ugc"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 text-gray-900"
+                ><path
+                  d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                ></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg
+              ></a
+            ><a aria-label="Facebook Profile" href="#" rel="ugc"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 text-blue-600"
+                ><path
+                  d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                ></path></svg
+              ></a
+            ><a aria-label="Instagram Profile" href="#" rel="ugc"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5 text-pink-500"
+                ><rect width="20" height="20" x="2" y="2" rx="5" ry="5"
+                ></rect><path
+                  d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
+                ></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"
+                ></line></svg
+              ></a>
+          </nav>
+        </h4>
+      </div><div class="mt-5">
+        <button
+          class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full"
+        >
+          Connect
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

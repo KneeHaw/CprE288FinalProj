@@ -1,0 +1,99 @@
+---
+// author: Conner Ohnesorge (2023) | conneroh.com
+// Description: A simple theme toggle button for the Roomba Rush Website.
+---
+
+<theme-toggle>
+  <button>
+    <span class="sr-only">Dark theme</span>
+    <span class="icon light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg></span>
+    <span class="icon dark"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-moon-star"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/><path d="M19 3v4"/><path d="M21 5h-4"/></svg></span>
+  </button>
+</theme-toggle>
+
+<style>
+  button {
+    display: flex;
+    border: 0;
+    border-radius: 999rem;
+    padding: 0;
+    background-color: var(--gray-999);
+    box-shadow: inset 0 0 0 1px var(--accent-overlay);
+    cursor: pointer;
+  }
+
+  .icon {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+    color: var(--accent-overlay);
+  }
+
+  .icon.light::before {
+    content: "";
+    z-index: -1;
+    position: absolute;
+    inset: 0;
+    background-color: var(--accent-regular);
+    border-radius: 999rem;
+  }
+
+  :global(.theme-dark) .icon.light::before {
+    transform: translateX(100%);
+  }
+
+  :global(.theme-dark) .icon.dark,
+  :global(html:not(.theme-dark)) .icon.light,
+  button[aria-pressed="false"] .icon.light {
+    color: var(--accent-text-over);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .icon,
+    .icon.light::before {
+      transition:
+        transform var(--theme-transition),
+        color var(--theme-transition);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .icon.light::before {
+      background-color: SelectedItem;
+    }
+  }
+</style>
+
+<script>
+  class ThemeToggle extends HTMLElement {
+    constructor() {
+      super();
+
+      const button = this.querySelector("button")!;
+
+      /** Set the theme to dark/light mode. */
+      const setTheme = (dark: boolean) => {
+        document.documentElement.classList[dark ? "add" : "remove"](
+          "theme-dark"
+        );
+        button.setAttribute("aria-pressed", String(dark));
+      };
+
+      // Toggle the theme when a user clicks the button.
+      button.addEventListener("click", () => setTheme(!this.isDark()));
+
+      // Initialize button state to reflect current theme.
+      setTheme(this.isDark());
+    }
+
+    isDark() {
+      localStorage.setItem('dark-mode', true);
+      return document.documentElement.classList.contains("theme-dark");
+    }
+  }
+  customElements.define("theme-toggle", ThemeToggle);
+</script>
